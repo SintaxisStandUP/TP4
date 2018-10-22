@@ -1,9 +1,11 @@
 %top{
 #include <stdio.h>
 #include "tokens.h"
+#include "parser.h"
 }
 %option header-file="scanner.h"
 %option outfile="scanner.c"
+%option yylineno
 %option noinput
 %option nounput
 
@@ -33,7 +35,7 @@ definir			return DEF;
 "."			return '.';
 {L}{LD}*		return ID;
 {D}+			return CTE;
-{D}+{LD}*		printf("Error léxico: Constante invalida: %s\n", yytext);
-{L}+{O}+({LD}*{O}*)*	printf("Error léxico: Identificador invalido: %s\n", yytext);
-{O}+			printf("Error léxico: cadena desconocida: %s\n", yytext); 
+{D}+{LD}*		{yylexerrs++; yyerror("Error léxico: constante invalida");}
+{L}+{O}+({LD}*{O}*)*	{yylexerrs++; yyerror("Error léxico: identificador invalido");}
+{O}+			{yylexerrs++; yyerror("Error léxico: cadena desconocida");}; 
 %%

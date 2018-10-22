@@ -1,11 +1,15 @@
 %{
 #include <stdio.h>
 char *token_names[] = {"ID", "CTE", "PROG", "VAR", "COD", "FIN", "LEER", "ESC", "DEF", "ASIG"};
+%defines "parser.h"
+%output "parser.c"
 %}
 
 %token ID CTE PROG VAR COD FIN LEER ESC DEF ASIG
 %define api.value.type {char *}
-
+%left '-' '+'
+%left '*' '/'
+%precedence NEG
 %%
 estructura : %PROG VAR definicion COD sentencias FIN;
 
@@ -29,7 +33,7 @@ listaExpresiones : expresion | expresion ',' listaExpresiones;
 
 expresion: termino | expresion '+' termino | expresion '-' termino;
 termino: inversion | termino '*' inversion | termino '/' inversion;
-inversion: primaria | '-' primaria;
+inversion: primaria | '-' primaria %prec NEG;
 primaria: ID | CTE | '(' expresion ')';
 %%
 
