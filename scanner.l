@@ -33,9 +33,10 @@ definir			return DEF;
 ")"			return ')';
 ","			return ',';
 "."			return '.';
-{L}{LD}*		return ID;
-{D}+			return CTE;
-{D}+{LD}*		{yylexerrs++; yyerror("Error léxico: constante invalida");}
-{L}+{O}+({LD}*{O}*)*	{yylexerrs++; yyerror("Error léxico: identificador invalido");}
-{O}+			{yylexerrs++; yyerror("Error léxico: cadena desconocida");}; 
+{L}{LD}*		{yylval = strdup(yytext); return ID;}
+{D}+			{yylval = strdup(yytext); return CTE;}
+{D}+{LD}*		{yylexerrs++; yyerror("Error léxico: constante %s invalida  \n", yytext);}
+{L}+{O}+({LD}*{O}*)*	{yylexerrs++; yyerror("Error léxico: identificador %s invalido \n", yytext);}
+{O}+			{yylexerrs++; yyerror("Error léxico: cadena %s desconocida \n", yytext);}
 %%
+

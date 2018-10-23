@@ -18,29 +18,34 @@
 %define parse.error verbose
 
 %%
-estructura : PROG VAR definicion COD sentencias FIN;
+estructura : PROG VAR definicion COD sentencias FIN {if (yynerrs || yylexerrs) YYABORT;}
 
-definicion : DEF variables;
+definicion : DEF variables {printf ("definir %s \n", yytext);}
 variables : ID '.' definicion
 		  | ID '.';
 		
 sentencias : lectura | escritura | asignacion;
 
-lectura : LEER '(' listaIdentificadores ')' '.'
+lectura : LEER '(' listaIdentificadores ')' '.' {printf ("leer \n")}
 		| LEER '(' listaIdentificadores ')' '.' sentencias
 		;
-escritura : ESC '(' listaExpresiones ')' '.'
+escritura : ESC '(' listaExpresiones ')' '.' {printf ("escribir \n")}
 		  | ESC '(' listaExpresiones ')' '.' sentencias
 		;
-asignacion : ID ASIG expresion '.'
+asignacion : ID ASIG expresion '.' {printf ("asignacion \n")}
 			| ID ASIG expresion '.' sentencias
 		;
 listaIdentificadores : ID | ID ',' listaIdentificadores;
 listaExpresiones : expresion | expresion ',' listaExpresiones;
 
-expresion: termino | expresion '+' termino | expresion '-' termino;
-termino: inversion | termino '*' inversion | termino '/' inversion;
-inversion: primaria | '-' primaria %prec NEG;
+expresion: termino 
+		   | expresion '+' termino {printf ("suma \n")}
+		   | expresion '-' termino {printf ("resta \n");}
+termino: inversion 
+		   | termino '*' inversion  {printf ("multiplicacion \n")}
+		   | termino '/' inversion {printf ("division \n");}
+inversion: primaria 
+		   | '-' primaria %prec NEG {printf ("inversion \n");}
 primaria: ID | CTE | '(' expresion ')';
 %%
 

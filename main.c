@@ -10,8 +10,27 @@
 */
 
 #include <stdio.h>
+extern int yylexerrs;
 
 int main (){
 
+yylexerrs=0;
 
+switch( yyparse() ){
+	case 0:
+		puts("Compilación terminada con exito \n"); return 0;
+	case 1:
+		puts("Errores de compilacion: \n"); return 1;
+	case 2:
+		puts("Memoria insuficiente"); return 2;
+	}
+	return 0;
+}
+
+/* Informar cantidad de errores */
+
+void yyerror(const char *s){
+	printf("línea #%d: %s\n", yylineno, s);
+	return;
+}
 }
