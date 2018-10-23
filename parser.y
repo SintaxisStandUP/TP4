@@ -1,17 +1,24 @@
-%{
+%code top{
 #include <stdio.h>
-char *token_names[] = {"ID", "CTE", "PROG", "VAR", "COD", "FIN", "LEER", "ESC", "DEF", "ASIG"};
+#include "scanner.h"
+}
+
+%code provides{
+	void yyerror(char const *s);	
+}
+
 %defines "parser.h"
 %output "parser.c"
-%}
-
 %token ID CTE PROG VAR COD FIN LEER ESC DEF ASIG
-%define api.value.type {char *}
 %left '-' '+'
 %left '*' '/'
 %precedence NEG
+
+%define api.value.type {char *}
+%define parse.error verbose
+
 %%
-estructura : %PROG VAR definicion COD sentencias FIN;
+estructura : PROG VAR definicion COD sentencias FIN;
 
 definicion : DEF variables;
 variables : ID '.' definicion
