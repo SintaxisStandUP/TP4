@@ -21,9 +21,9 @@
 %%
 estructura : PROG VAR definicion COD sentencias FIN {if (yynerrs || yylexerrs) YYABORT;}
 
-definicion : DEF variables {printf ("definir %s \n", yytext);}
-variables : ID '.' definicion
-		  | ID '.';
+definicion : DEF variables {printf ("definir ");}
+variables : ID '.' definicion {printf (" %s \n", yytext)}
+		  | ID '.' {printf ("%s \n", yytext);}
 		
 sentencias : lectura | escritura | asignacion;
 
@@ -47,6 +47,6 @@ termino: inversion
 		   | termino '/' inversion {printf ("division \n");}
 inversion: primaria 
 		   | '-' primaria %prec NEG {printf ("inversion \n");}
-primaria: ID | CTE | '(' expresion ')';
+primaria: ID | CTE | '(' expresion ')' {printf ("parentes \n");}
 %%
 
