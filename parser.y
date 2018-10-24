@@ -4,7 +4,8 @@
 }
 
 %code provides{
-	void yyerror(char const *s);	
+	void yyerror(char const *s);
+	int yylexerrs;
 }
 
 %defines "parser.h"
@@ -26,23 +27,23 @@ variables : ID '.' definicion
 		
 sentencias : lectura | escritura | asignacion;
 
-lectura : LEER '(' listaIdentificadores ')' '.' {printf ("leer \n")}
+lectura : LEER '(' listaIdentificadores ')' '.' {printf ("leer \n");}//
 		| LEER '(' listaIdentificadores ')' '.' sentencias
 		;
-escritura : ESC '(' listaExpresiones ')' '.' {printf ("escribir \n")}
+escritura : ESC '(' listaExpresiones ')' '.' {printf ("escribir \n");}//
 		  | ESC '(' listaExpresiones ')' '.' sentencias
 		;
-asignacion : ID ASIG expresion '.' {printf ("asignacion \n")}
+asignacion : ID ASIG expresion '.' {printf ("asignacion \n");}//
 			| ID ASIG expresion '.' sentencias
 		;
 listaIdentificadores : ID | ID ',' listaIdentificadores;
 listaExpresiones : expresion | expresion ',' listaExpresiones;
 
 expresion: termino 
-		   | expresion '+' termino {printf ("suma \n")}
+		   | expresion '+' termino {printf ("suma \n");}//
 		   | expresion '-' termino {printf ("resta \n");}
 termino: inversion 
-		   | termino '*' inversion  {printf ("multiplicacion \n")}
+		   | termino '*' inversion  {printf ("multiplicacion \n");}//
 		   | termino '/' inversion {printf ("division \n");}
 inversion: primaria 
 		   | '-' primaria %prec NEG {printf ("inversion \n");}

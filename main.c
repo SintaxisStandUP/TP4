@@ -10,13 +10,14 @@
 */
 
 #include <stdio.h>
+#include "scanner.h"
 extern int yylexerrs;
-
+void yyerror(const char *s);
 int main (){
 
-yylexerrs=0;
+	yylexerrs=0;
 
-switch( yyparse() ){
+	switch( yyparse() ){
 	case 0:
 		puts("Compilación terminada con exito \n"); return 0;
 	case 1:
@@ -32,5 +33,4 @@ switch( yyparse() ){
 void yyerror(const char *s){
 	printf("línea #%d: %s\n", yylineno, s);
 	return;
-}
-}
+	}
