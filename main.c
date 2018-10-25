@@ -26,6 +26,9 @@ int main (){
 		puts("Memoria insuficiente"); return 2;
 	}
 	return 0;
+	
+	printf ("Errores lexicos: %d \n", yylexerrs);
+	printf ("Errores sintacticos: %d \n", yyners);
 }
 
 /* Informar cantidad de errores */
