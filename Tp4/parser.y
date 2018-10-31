@@ -4,7 +4,7 @@
 }
 
 %code provides{
-	void yyerror(const char *s);
+	void yyerror(char const *s);
 	int yylexerrs;
 	int yynerrs;
 }
@@ -21,7 +21,7 @@
 %define parse.error verbose
 
 %%
-estructura : PROG VAR definicion COD sentencias FIN {if (yynerrs || yylexerrs) YYABORT; else YYACCEPT;}
+estructura : PROG VAR definicion COD sentencias FIN {if (yynerrs || yylexerrs) YYABORT;}
 
 //definicion : DEF variables {printf ("definir ");}
 

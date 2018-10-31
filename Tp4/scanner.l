@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include "parser.h"
 #include <string.h>
-char buffer[100];
 }
 %option header-file="scanner.h"
 %option outfile="scanner.c"
@@ -36,15 +35,8 @@ definir			return DEF;
 "."			return '.';
 {L}{LD}*		{yylval = strdup(yytext); return ID;}
 {D}+			{yylval = strdup(yytext); return CTE;}
-{D}+{LD}*		{	yylexerrs++;
-				sprintf(buffer,"Error lexico: constante invalida: %s",yytext);
-			 	yyerror(buffer);
-				}
-{L}+({LD}*{O}*)+	{	yylexerrs++; 
-				sprintf(buffer,"Error lexico: identificador invalido: %s",yytext);
-			 	yyerror(buffer);}//{L}+{O}+({LD}*{O}*)*
-{O}+({LD}*{O}*)*	{	yylexerrs++;
-				sprintf(buffer,"Error lexico: cadena desconocida: %s",yytext);
-			 	yyerror(buffer);}//modificado, antes era {O}+
+{D}+{LD}*		{yylexerrs++; yyerror("Error léxico: constante  invalida ");printf("%s\n",yytext);}
+{L}+({LD}*{O}*)+	{yylexerrs++; yyerror("Error léxico: identificador invalido ");printf("%s\n",yytext);}//{L}+{O}+({LD}*{O}*)*
+{O}+({LD}*{O}*)*	{yylexerrs++; yyerror("Error léxico: cadena desconocida ");printf("%s\n",yytext);}//modificado, antes era {O}+
 %%
 

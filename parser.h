@@ -73,9 +73,10 @@ int yyparse (void);
 /* "%code provides" blocks.  */
 #line 6 "parser.y" /* yacc.c:1909  */
 
-	void yyerror(char const *s);
+	void yyerror(const char *s);
 	int yylexerrs;
+	int yynerrs;
 
-#line 80 "parser.h" /* yacc.c:1909  */
+#line 81 "parser.h" /* yacc.c:1909  */
 
 #endif /* !YY_YY_PARSER_H_INCLUDED  */

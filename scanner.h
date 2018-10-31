@@ -4,10 +4,11 @@
 
 #line 6 "scanner.h"
 #include <stdio.h>
-//#include "tokens.h"
 #include "parser.h"
+#include <string.h>
+char buffer[100];
 
-#line 11 "scanner.h"
+#line 12 "scanner.h"
 
 #define  YY_INT_ALIGNED short int
 
@@ -318,9 +319,9 @@ extern int yylex (void);
 #undef YY_DECL
 #endif
 
-#line 41 "scanner.l"
+#line 49 "scanner.l"
 
 
-#line 325 "scanner.h"
+#line 326 "scanner.h"
 #undef yyIN_HEADER
 #endif /* yyHEADER_H */

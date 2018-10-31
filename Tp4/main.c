@@ -34,7 +34,8 @@ int main (){
 }
 
 /* Informar cantidad de errores */
+
 void yyerror(const char *s){
 	printf("línea #%d: %s\n", yylineno, s);
 	return;
-}
+	}
