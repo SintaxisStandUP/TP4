@@ -50,15 +50,23 @@ listaExpresiones : listaExpresiones ',' expresion | expresion | error  '.';
 //termino: inversion 
 //		   | termino '*' inversion  {printf ("multiplicacion \n");}//
 //		   | termino '/' inversion {printf ("division \n");}
+
+
+
 expresion: expresion '+' termino {printf ("suma \n");}
 		|expresion '-' termino{printf ("resta \n");} 
 		| termino;
-termino: termino '*' inversion{printf ("multiplicacion \n");} 
-		| termino '/' inversion{printf ("division \n");} 
-		| inversion;
-inversion: primaria 
-		   | '-' primaria %prec NEG {printf ("inversion \n");};
+//		| '-' termino %prec NEG;
+
+termino: termino '*' '-' primaria %prec NEG{printf("inversion\n");printf("multiplicacion\n");}
+		|termino '*' primaria {printf("multiplicacion\n");}
+		|termino '/' '-' primaria %prec NEG{printf("inversion\n");printf("division\n");}
+		|termino '/' primaria {printf("division\n");}
+		|primaria
+		| '-' primaria %prec NEG {printf ("inversion \n");};
+		
 
 primaria: ID | CTE | '(' expresion ')' {printf ("parentesis \n");};
+
 %%
 

@@ -14,7 +14,7 @@
 #include "parser.h"
 //extern int yylexerrs;
 //extern int yynerrs;
-void yyerror(const char *s);
+
 int main (){
 
 	yylexerrs=0;
